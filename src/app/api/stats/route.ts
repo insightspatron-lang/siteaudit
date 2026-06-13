@@ -8,18 +8,19 @@ const STATUSES: OpportunityStatus[] = [
 
 // ─── GET /api/stats ──────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
-  const userId = getUserId(req);
-  await setUserId(userId);
+  try {
+    const userId = getUserId(req);
+    await setUserId(userId);
 
-  // Fetch all opportunities for this user
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (getSupabaseAdmin().from("opportunities") as any)
-    .select("status, opportunity_score, audit_score, created_at")
-    .eq("user_id", userId);
+    // Fetch all opportunities for this user
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (getSupabaseAdmin().from("opportunities") as any)
+      .select("status, opportunity_score, audit_score, created_at")
+      .eq("user_id", userId);
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 
   const rows = data ?? [];
 
@@ -72,4 +73,8 @@ export async function GET(req: NextRequest) {
     pipelineVelocity,
     winRate,
   });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: `outer: ${msg}` }, { status: 500 });
+  }
 }
