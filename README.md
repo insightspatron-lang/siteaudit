@@ -2,6 +2,7 @@
 
 AI-powered SEO audit and CRM tool.
 
+
 **Instant website audit. Zero paid services. Deploys to Vercel free tier in 5 minutes.**
 
 Enter any URL → get a structured audit with a score, strengths, weaknesses, recommendations, and a ready-to-use cold outreach message.
