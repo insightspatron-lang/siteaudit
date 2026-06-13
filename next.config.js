@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+  // standalone removed: prevents API routes from being excluded
+  // from the serverless function bundle on Vercel
   async headers() {
     return [
       {
