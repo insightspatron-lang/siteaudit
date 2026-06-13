@@ -34,6 +34,7 @@ export default function ManualEntryPanel({ onAdded }: Props) {
         lat: 0,
         lon: 0,
         website: normalized,
+        email: null,
         phone: null,
         source: "manual",
       };

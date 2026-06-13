@@ -48,6 +48,7 @@ export default function CsvImportPanel({ onParsed }: Props) {
         const address = get(["address", "location", "street"]);
         const city = get(["city", "town", "locality"]);
         const country = get(["country", "nation", "region"]) || "US";
+        const email = get(["email", "e-mail", "mail"]);
         const category = get(["category", "niche", "industry", "type"]) || "business";
 
         if (!name && !url) continue;
@@ -72,6 +73,7 @@ export default function CsvImportPanel({ onParsed }: Props) {
           lat: 0,
           lon: 0,
           website: normalizedUrl,
+          email: email || null,
           phone: phone || null,
           source: "csv",
         });

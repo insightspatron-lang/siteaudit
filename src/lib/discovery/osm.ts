@@ -190,6 +190,7 @@ function mapOsmToBusinesses(
         lat,
         lon,
         website,
+        email: null, // OSM does not store email; enrichment happens at scrape time
         phone: phone ? normalizePhone(phone) : null,
         source: "osm" as const,
       };

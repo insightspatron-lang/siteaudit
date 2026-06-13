@@ -8,6 +8,7 @@ import ManualEntryPanel from "./components/ManualEntryPanel";
 import CsvImportPanel from "./components/CsvImportPanel";
 import BatchStatusPanel from "./components/BatchStatusPanel";
 import OpportunityTable from "./components/OpportunityTable";
+import CrmPage from "./components/CrmPage";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
@@ -119,7 +120,7 @@ function exportToCsv(results: AuditedBusiness[]) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-type ViewMode = "single" | "engine";
+type ViewMode = "single" | "engine" | "crm";
 type BatchStatus = "idle" | "queued" | "processing" | "complete" | "error";
 
 export default function HomePage() {
@@ -283,6 +284,19 @@ export default function HomePage() {
               }`}
             >
               <IconGlobe /> Opportunity Engine
+            </button>
+            <button
+              onClick={() => setViewMode("crm")}
+              className={`flex items-center gap-1.5 h-7 px-3 rounded-md text-xs font-medium transition-colors ${
+                viewMode === "crm"
+                  ? "bg-indigo-500 text-white"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              CRM
             </button>
           </div>
 
@@ -461,7 +475,7 @@ export default function HomePage() {
           </>
         )}
 
-        {/* ─── OPPORTUNITY ENGINE MODE ────────────────────────────────────── */}
+        {/* Opportunity Engine (Phase 1 — ephemeral, no persistence) */}
         {viewMode === "engine" && (
           <div className="space-y-6">
 
@@ -518,6 +532,11 @@ export default function HomePage() {
               </div>
             )}
           </div>
+        )}
+
+        {/* ─── CRM MODE (Phase 2 — Supabase persistence) ──────────────────── */}
+        {viewMode === "crm" && (
+          <CrmPage />
         )}
       </main>
 
