@@ -1,6 +1,6 @@
 # SiteAudit
 
-AI-powered SEO audit and CRM tool. — MVP
+AI-powered SEO audit and CRM tool.
 
 **Instant website audit. Zero paid services. Deploys to Vercel free tier in 5 minutes.**
 
