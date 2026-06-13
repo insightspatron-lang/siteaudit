@@ -86,3 +86,5 @@ Or connect your GitHub repo to Vercel — push to `main` triggers deployment aut
 3. Audits now use GPT-4o-mini instead of heuristic scoring
 
 For OpenRouter / other OpenAI-compatible APIs: also set `OPENAI_BASE_URL`.
+Deployment trigger
+chore: trigger redeploy
