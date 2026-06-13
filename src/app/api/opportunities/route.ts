@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { getUserId } from "@/lib/supabase/server";
+import { getSupabaseAdmin, getUserId, setUserId } from "@/lib/supabase/server";
 import type { Opportunity, OpportunityStatus, ListParams } from "@/types";
 
 // ─── GET /api/opportunities ──────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
   const userId = getUserId(req);
+  await setUserId(userId);
   const { searchParams } = new URL(req.url);
 
   const status = searchParams.get("status") as OpportunityStatus | null;
@@ -88,6 +88,7 @@ export async function GET(req: NextRequest) {
 // ─── POST /api/opportunities ─────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   const userId = getUserId(req);
+  await setUserId(userId);
 
   let body: Partial<{
     name: string;

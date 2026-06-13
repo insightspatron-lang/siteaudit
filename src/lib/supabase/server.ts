@@ -29,3 +29,13 @@ export function getUserId(req: Request): string {
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "anon";
   return anonKey.slice(0, 8);
 }
+
+// Set the session-level app.user_id Postgres setting before running RLS-protected queries.
+// Call this at the start of every API route that accesses the opportunities table.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function setUserId(userId: string): Promise<void> {
+  const { error } = await (getSupabaseAdmin() as any).rpc("set_user_id", { pass_user_id: userId });
+  if (error) {
+    throw new Error(`Failed to set user context: ${error.message}`);
+  }
+}

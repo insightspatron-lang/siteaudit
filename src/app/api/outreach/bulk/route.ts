@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { getUserId } from "@/lib/supabase/server";
+import { getSupabaseAdmin, getUserId, setUserId } from "@/lib/supabase/server";
 import { buildOutreachMessage } from "@/lib/batch/processor";
 
 // ─── POST /api/outreach/bulk ─────────────────────────────────────────────────────
@@ -8,6 +7,7 @@ import { buildOutreachMessage } from "@/lib/batch/processor";
 // Used when you want to refresh outreach messages after updating the template.
 export async function POST(req: NextRequest) {
   const userId = getUserId(req);
+  await setUserId(userId);
 
   let body: { status?: string; batchId?: string; category?: string };
   try {

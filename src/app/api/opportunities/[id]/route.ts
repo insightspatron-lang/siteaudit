@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { getUserId } from "@/lib/supabase/server";
+import { getSupabaseAdmin, getUserId, setUserId } from "@/lib/supabase/server";
 import type { OpportunityStatus } from "@/types";
 
 // ─── GET /api/opportunities/[id] ────────────────────────────────────────────────
@@ -9,6 +8,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   const userId = getUserId(_req);
+  await setUserId(userId);
   const { id } = params;
 
   const { data, error } = await getSupabaseAdmin().from("opportunities")
@@ -30,6 +30,7 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ) {
   const userId = getUserId(req);
+  await setUserId(userId);
   const { id } = params;
 
   type UpdateBody = Partial<{

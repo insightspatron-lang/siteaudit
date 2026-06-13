@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { getUserId } from "@/lib/supabase/server";
+import { getSupabaseAdmin, getUserId, setUserId } from "@/lib/supabase/server";
 import type { OpportunityStatus } from "@/types";
 
 const STATUSES: OpportunityStatus[] = [
@@ -10,6 +9,7 @@ const STATUSES: OpportunityStatus[] = [
 // ─── GET /api/stats ──────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
   const userId = getUserId(req);
+  await setUserId(userId);
 
   // Fetch all opportunities for this user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

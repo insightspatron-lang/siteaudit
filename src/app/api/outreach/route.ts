@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { getUserId } from "@/lib/supabase/server";
+import { getSupabaseAdmin, getUserId, setUserId } from "@/lib/supabase/server";
 import { buildOutreachMessage } from "@/lib/batch/processor";
 
 // ─── POST /api/outreach ───────────────────────────────────────────────────────────
 // Regenerate a single opportunity's outreach message from its audit data
 export async function POST(req: NextRequest) {
   const userId = getUserId(req);
+  await setUserId(userId);
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 

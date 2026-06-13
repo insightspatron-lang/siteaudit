@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin, getUserId } from "@/lib/supabase/server";
+import { getSupabaseAdmin, getUserId, setUserId } from "@/lib/supabase/server";
 import type { DiscoveredBusiness, AuditedBusiness } from "@/types";
 import { auditBusiness } from "@/lib/batch/processor";
 
@@ -14,6 +14,7 @@ const BATCH_TIMEOUT_MS = 12_000; // 12s — safely under Vercel free tier 10s
 // Phase 3: Supabase Edge Function handles the long tail asynchronously.
 export async function POST(req: NextRequest) {
   const userId = getUserId(req);
+  await setUserId(userId);
 
   let businesses: DiscoveredBusiness[];
   try {
